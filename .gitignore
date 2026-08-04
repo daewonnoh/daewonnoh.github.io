@@ -1,0 +1,21 @@
+# 비공개 원본 — 한 번 커밋하면 삭제해도 히스토리에 영구히 남습니다
+*.docx
+*.doc
+*.tmp
+~$*
+
+# 작업 폴더 (Drive 원본 쪽 이름과 동일하게 차단)
+작업파일/
+old cv/
+outputs/
+public_cv_work/
+qa-cv-*/
+pipeline/
+
+# 도구·OS
+node_modules/
+__pycache__/
+.pytest_cache/
+Thumbs.db
+desktop.ini
+.DS_Store
