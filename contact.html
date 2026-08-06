@@ -28,10 +28,10 @@
         <p class="eyebrow">Contact</p>
         <h1 id="contact-title">문의<em>하기</em></h1>
         <p class="contact-lead">강연·자문·연구·협업에 관한 문의를 남겨 주세요. 입력하신 내용은 <a href="mailto:novel@jejunu.ac.kr">novel@jejunu.ac.kr</a>로 전달됩니다.</p>
-        <p class="contact-note">기본 이메일 앱이 열리면 내용을 확인한 뒤 ‘보내기’를 눌러 주세요.</p>
+        <p class="contact-note">작성 후 문의 보내기를 누르면 Google Apps Script를 통해 바로 전송됩니다.</p>
         <p class="contact-back"><a class="text-link" href="index.html">← 홈페이지로 돌아가기</a></p>
       </div>
-      <form class="contact-form" id="contact-form">
+      <form class="contact-form" id="contact-form" method="POST" target="contact-submit-frame">
         <div class="contact-field">
           <label for="contact-name">이름</label>
           <input id="contact-name" name="name" type="text" autocomplete="name" required>
@@ -51,21 +51,27 @@
         </div>
         <button class="cta cta-primary contact-submit" type="submit">문의 보내기 <span aria-hidden="true">↗</span></button>
         <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
+        <iframe name="contact-submit-frame" id="contact-submit-frame" title="문의 전송 결과" hidden></iframe>
       </form>
     </section>
   </main>
   <footer class="site-footer">제주대학교 국어교육과 · <a href="mailto:novel@jejunu.ac.kr">novel@jejunu.ac.kr</a></footer>
   <script>
     (() => {
-      const recipient = 'novel@jejunu.ac.kr';
+      const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwX_F_Q-4eHT6JuOxk6r9Vzna7QFOkSGZdqyI8s5d2T2wUPdjChHtZuRWA5cPTnjMfFBg/exec';
       const form = document.getElementById('contact-form');
       const status = document.getElementById('contact-status');
       const submit = form.querySelector('button[type="submit"]');
-      const buildMailtoUrl = ({ name, email, subject, message }) => {
-        const body = ['이름: ' + name, '답변 이메일: ' + email, '', message].join('\n');
-        const params = new URLSearchParams({ subject, body });
-        return 'mailto:' + recipient + '?' + params.toString();
-      };
+      const resultFrame = document.getElementById('contact-submit-frame');
+      let submissionStarted = false;
+
+      resultFrame.addEventListener('load', () => {
+        if (!submissionStarted) return;
+        status.textContent = '문의 전송 요청을 완료했습니다. 확인 후 답변드리겠습니다.';
+        status.className = 'contact-status is-success';
+        submit.disabled = false;
+      });
+
       form.addEventListener('submit', (event) => {
         event.preventDefault();
         const data = Object.fromEntries(new FormData(form).entries());
@@ -74,14 +80,18 @@
           status.className = 'contact-status is-error';
           return;
         }
+        if (!APPS_SCRIPT_ENDPOINT || !APPS_SCRIPT_ENDPOINT.endsWith('/exec')) {
+          status.textContent = '관리자 설정이 아직 완료되지 않았습니다. Apps Script 웹앱 URL을 연결해 주세요.';
+          status.className = 'contact-status is-error';
+          return;
+        }
+
+        form.action = APPS_SCRIPT_ENDPOINT;
+        submissionStarted = true;
         submit.disabled = true;
-        status.textContent = '기본 이메일 앱을 여는 중입니다…';
+        status.textContent = '문의 내용을 전송하는 중입니다…';
         status.className = 'contact-status';
-        window.location.href = buildMailtoUrl(data);
-        window.setTimeout(() => {
-          submit.disabled = false;
-          status.textContent = '이메일 앱이 열리면 “보내기”를 눌러 주세요.';
-        }, 800);
+        HTMLFormElement.prototype.submit.call(form);
       });
     })();
   </script>
