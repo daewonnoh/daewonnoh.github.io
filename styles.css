@@ -572,7 +572,7 @@ main { max-width: 84rem; }
 .hero-keywords a:hover { border-color: #1648d4; background: #1648d4; }
 .cta { min-height: 2.55rem; padding: .6rem .85rem; font-size: .72rem; letter-spacing: .03em; }
 .hero-portrait { min-height: clamp(25rem, 47vw, 38rem); background: #d8d3cd; box-shadow: 18px 20px 0 rgba(22,72,212,.11); }
-.hero-portrait img { filter: saturate(.7) contrast(1.02); object-position: center 44%; }
+.hero-portrait img { filter: contrast(1.04); object-position: center 30%; }
 .hero-portrait::after { position: absolute; inset: 1.15rem; border: 1px solid rgba(255,255,255,.55); content: ""; pointer-events: none; }
 .hero-portrait figcaption { right: 1.35rem; bottom: 1.35rem; background: rgba(242,238,232,.9); font-size: .66rem; letter-spacing: .04em; }
 .portrait-grid { height: 18%; opacity: .22; }
