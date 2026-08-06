@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   color-scheme: light;
   --paper: #F7F3EF;
   --surface: #FFFCF8;
@@ -670,8 +670,58 @@ body:not(.home-page) .publication-meta,
 body:not(.home-page) .talk-date,
 body:not(.home-page) .timeline-meta,
 body:not(.home-page) .meta {
-  font-size: .82rem;
+  font-size: 1.02rem;
 }
+
+/* Academic presentations section layout & KAIST feature photo */
+body:not(.home-page) .academic-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, .75fr);
+  align-items: start;
+  gap: clamp(1rem, 2.8vw, 2.25rem);
+}
+
+body:not(.home-page) .academic-photo {
+  align-self: start;
+  position: sticky;
+  top: 2rem;
+  margin: 0;
+  padding: .5rem .5rem .75rem;
+  border-top: 2px solid #1648d4;
+  border: 1px solid rgba(17, 18, 22, .16);
+  border-top: 2px solid #1648d4;
+  background: rgba(255, 253, 250, .85);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .04);
+}
+
+body:not(.home-page) .academic-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+body:not(.home-page) .academic-photo figcaption {
+  margin: .6rem .1rem 0;
+  color: var(--muted, #6b6862);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  line-height: 1.4;
+}
+
+@media (max-width: 760px) {
+  body:not(.home-page) .academic-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body:not(.home-page) .academic-photo {
+    position: static;
+    max-width: 100%;
+  }
+}
+
 body:not(.home-page) .talk-card {
   padding: 1.15rem;
 }
