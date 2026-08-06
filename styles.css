@@ -2074,6 +2074,47 @@ body:not(.home-page) .career-feature figcaption {
   }
 }
 
+/* Papers section feature media */
+body:not(.home-page) .papers-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, .62fr);
+  align-items: start;
+  gap: clamp(1rem, 2.8vw, 2.25rem);
+}
+
+body:not(.home-page) .papers-feature {
+  align-self: start;
+  margin: 0;
+  padding: .45rem .45rem .65rem;
+  border-top: 2px solid #1648d4;
+  background: rgba(255, 253, 250, .72);
+}
+
+body:not(.home-page) .papers-feature img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+body:not(.home-page) .papers-feature figcaption {
+  margin: .55rem .1rem 0;
+  color: var(--muted, #6b6862);
+  font-size: .68rem;
+  letter-spacing: .02em;
+  line-height: 1.35;
+}
+
+@media (max-width: 720px) {
+  body:not(.home-page) .papers-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body:not(.home-page) .papers-feature {
+    max-width: 32rem;
+  }
+}
+
 /* Public talks explicit two-column placement */
 @media (min-width: 721px) {
   body:not(.home-page) .public-layout > .record-list {
