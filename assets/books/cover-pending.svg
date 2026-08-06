@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750" role="img" aria-labelledby="title desc">
+  <title id="title">표지 미공개</title>
+  <desc id="desc">출간 예정 도서의 표지는 아직 공개되지 않았습니다.</desc>
+  <rect width="500" height="750" fill="#ebe6dc"/>
+  <rect x="30" y="30" width="440" height="690" fill="none" stroke="#1648d4" stroke-width="3"/>
+  <path d="M82 156h336M82 188h250M82 576h336M82 608h270" stroke="#1648d4" stroke-width="4" opacity=".5"/>
+  <text x="82" y="340" fill="#282a2f" font-family="Arial, sans-serif" font-size="32" font-weight="700">COVER</text>
+  <text x="82" y="382" fill="#282a2f" font-family="Arial, sans-serif" font-size="32" font-weight="700">PENDING</text>
+  <text x="82" y="450" fill="#1648d4" font-family="Arial, sans-serif" font-size="18">FORTHCOMING</text>
+</svg>

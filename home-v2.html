@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>노대원 — 문학평론가 · 제주대학교 교수</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f1ea;
+  --paper-2:#eae5da;
+  --ink:#16130f;
+  --ink-2:#4a443c;
+  --ink-3:#8c8478;
+  --rule:#d6cfc1;
+  --red:#b8332a;
+  --serif:'Nanum Myeongjo','Noto Serif KR',Batang,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --sans:'Noto Sans KR',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#12100d; --paper-2:#1b1814; --ink:#f0ece3; --ink-2:#bab3a6;
+    --ink-3:#7d766a; --rule:#332e27; --red:#e0685c;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+
+/* ── 레이아웃 ───────────────────────────── */
+.shell{display:grid; grid-template-columns:250px 1fr; max-width:1180px; margin:0 auto; gap:0 4.5rem; padding:0 2.25rem}
+
+/* ── 좌측 레일 ──────────────────────────── */
+.rail{position:sticky; top:0; height:100vh; display:flex; flex-direction:column; padding:3.25rem 0 2.25rem; border-right:1px solid var(--rule); margin-right:-2.25rem; padding-right:2.25rem}
+.sig{font-family:var(--serif); font-size:2.1rem; font-weight:800; line-height:1.1; letter-spacing:-.01em; margin:0; text-decoration:none; display:block}
+.sig-en{font-family:var(--mono); font-size:.7rem; letter-spacing:.18em; color:var(--ink-3); margin:.55rem 0 0; text-transform:uppercase}
+.role{margin:1.6rem 0 0; font-size:.83rem; line-height:1.85; color:var(--ink-2)}
+.role b{font-weight:500; color:var(--ink)}
+
+.rail nav{margin-top:2.5rem}
+.rail nav ol{list-style:none; margin:0; padding:0; counter-reset:n}
+.rail nav li{counter-increment:n; border-top:1px solid var(--rule)}
+.rail nav li:last-child{border-bottom:1px solid var(--rule)}
+.rail nav a{
+  display:flex; align-items:baseline; gap:.75rem; padding:.6rem 0;
+  text-decoration:none; font-size:.9rem; color:var(--ink-2); transition:color .18s, padding-left .18s;
+}
+.rail nav a::before{content:counter(n,decimal-leading-zero); font-family:var(--mono); font-size:.66rem; color:var(--ink-3)}
+.rail nav a:hover{color:var(--red); padding-left:.35rem}
+.rail nav a[aria-current]{color:var(--ink); font-weight:500}
+.rail nav a[aria-current]::before{color:var(--red)}
+
+.rail-foot{margin-top:auto; font-family:var(--mono); font-size:.68rem; line-height:2; color:var(--ink-3)}
+.rail-foot a{text-decoration:none; border-bottom:1px solid var(--rule)}
+.rail-foot a:hover{color:var(--red); border-color:var(--red)}
+
+/* ── 본문 공통 ──────────────────────────── */
+main{padding:3.25rem 0 0; min-width:0}
+.block{padding:0 0 4.5rem}
+.block + .block{border-top:1px solid var(--rule); padding-top:3.25rem}
+.tag{
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ink-3); display:flex; align-items:center; gap:.7rem; margin:0 0 1.9rem;
+}
+.tag::after{content:''; flex:1; height:1px; background:var(--rule)}
+.tag em{font-style:normal; color:var(--red)}
+
+/* ── 히어로 ─────────────────────────────── */
+.hero h1{
+  font-family:var(--serif); font-weight:800;
+  font-size:clamp(2.1rem,4.4vw,3.35rem); line-height:1.36; letter-spacing:-.015em;
+  margin:0 0 1.75rem; text-wrap:balance;
+}
+.hero h1 .q{color:var(--red)}
+.caret{display:inline-block; width:.5ch; height:.9em; background:var(--red); vertical-align:-.06em; margin-left:.12em; animation:blink 1.15s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lede{font-family:var(--serif); font-size:1.12rem; line-height:1.95; color:var(--ink-2); max-width:44ch; margin:0 0 2.1rem}
+.acts{display:flex; gap:2rem; flex-wrap:wrap; font-size:.88rem}
+.acts a{text-decoration:none; border-bottom:1.5px solid var(--red); padding-bottom:.2rem; font-weight:500; transition:gap .18s}
+.acts a span{color:var(--red); display:inline-block; transition:transform .22s}
+.acts a:hover span{transform:translateX(.3rem)}
+
+/* ── 키워드 ─────────────────────────────── */
+.keys{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:2.6rem}
+.keys li{
+  list-style:none; font-family:var(--mono); font-size:.7rem; letter-spacing:.03em;
+  border:1px solid var(--rule); border-radius:2px; padding:.28rem .6rem; color:var(--ink-2);
+}
+
+/* ── 책장 ───────────────────────────────── */
+.shelf{display:flex; align-items:flex-end; gap:.85rem; padding-bottom:1.1rem; border-bottom:2px solid var(--ink); overflow-x:auto}
+.spine{
+  writing-mode:vertical-rl; text-orientation:upright;
+  font-family:var(--serif); font-weight:700; font-size:.94rem; letter-spacing:.06em; line-height:1.25;
+  color:#f4f1ea; text-decoration:none; flex:0 0 auto;
+  padding:1.5rem .62rem; border-radius:2px 2px 0 0;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:inset -3px 0 0 rgba(0,0,0,.14), 0 3px 10px rgba(0,0,0,.14);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1);
+}
+.spine:hover{transform:translateY(-14px)}
+.s1{background:#1d2432; height:320px}
+.s2{background:#7c2d24; height:300px}
+.s3{background:#3d4a3a; height:334px}
+.s4{background:#4a3f5c; height:288px}
+.shelf-notes{display:flex; gap:.85rem; margin:.8rem 0 0; overflow-x:auto}
+.shelf-notes div{font-family:var(--mono); font-size:.66rem; color:var(--ink-3); line-height:1.6}
+.n1{flex:0 0 56px}.n2{flex:0 0 56px}.n3{flex:0 0 56px}.n4{flex:0 0 56px}
+
+/* ── 최근 활동 ──────────────────────────── */
+.log{list-style:none; margin:0; padding:0}
+.log li{display:grid; grid-template-columns:7.5rem 1fr; gap:1.5rem; padding:.85rem 0; border-bottom:1px solid var(--rule)}
+.log li:first-child{border-top:1px solid var(--rule)}
+.log time{font-family:var(--mono); font-size:.72rem; color:var(--ink-3); padding-top:.4rem}
+.log p{margin:0; font-size:.94rem}
+.log .kind{font-family:var(--mono); font-size:.63rem; letter-spacing:.12em; text-transform:uppercase; color:var(--red); display:block; margin-bottom:.15rem}
+
+/* ── 3열 요약 ───────────────────────────── */
+.cols{display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem}
+.cols h3{font-family:var(--serif); font-size:1.22rem; font-weight:700; margin:.55rem 0 .5rem}
+.cols h3 a{text-decoration:none}
+.cols h3 a:hover{color:var(--red)}
+.cols .num{font-family:var(--mono); font-size:.66rem; color:var(--red); letter-spacing:.16em}
+.cols p{margin:0; font-size:.85rem; color:var(--ink-2); line-height:1.85}
+
+/* ── 인용 ───────────────────────────────── */
+.pull{border-left:2px solid var(--red); padding:.2rem 0 .2rem 1.6rem; margin:0}
+.pull p{font-family:var(--serif); font-size:1.3rem; line-height:1.8; margin:0 0 .8rem; max-width:38ch}
+.pull cite{font-family:var(--mono); font-size:.68rem; font-style:normal; color:var(--ink-3); letter-spacing:.08em}
+
+footer.page{border-top:1px solid var(--rule); margin-top:1rem; padding:1.7rem 0 3rem; font-family:var(--mono); font-size:.66rem; color:var(--ink-3); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+
+/* ── 모바일 ─────────────────────────────── */
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr; gap:0; padding:0 1.4rem}
+  .rail{position:static; height:auto; border-right:none; border-bottom:1px solid var(--rule); margin-right:0; padding:2.25rem 0 1.5rem}
+  .rail nav{margin-top:1.6rem}
+  .rail nav ol{display:flex; flex-wrap:wrap; gap:0 1.4rem}
+  .rail nav li{border:none !important}
+  .rail nav a{padding:.2rem 0}
+  .rail-foot{margin-top:1.4rem}
+  main{padding-top:2.25rem}
+  .cols{grid-template-columns:1fr; gap:1.9rem}
+  .log li{grid-template-columns:1fr; gap:.15rem}
+  .log time{padding-top:0}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ══ 좌측 레일 ══ -->
+  <aside class="rail">
+    <div>
+      <a class="sig" href="#">노대원</a>
+      <p class="sig-en">Daewon Noh</p>
+      <p class="role">
+        <b>문학평론가</b><br>
+        제주대학교 국어교육과 교수<br>
+        고려대학교 국어교육과 객원교수
+      </p>
+    </div>
+
+    <nav aria-label="주 메뉴">
+      <ol>
+        <li><a href="#" aria-current="page">홈</a></li>
+        <li><a href="#">저서</a></li>
+        <li><a href="#">연구</a></li>
+        <li><a href="#">평론</a></li>
+        <li><a href="#">강연·언론</a></li>
+        <li><a href="#">경력</a></li>
+        <li><a href="#">CV</a></li>
+        <li><a href="#">English</a></li>
+      </ol>
+    </nav>
+
+    <div class="rail-foot">
+      <a href="mailto:novel@jejunu.ac.kr">novel@jejunu.ac.kr</a><br>
+      <a href="https://youtube.com/@Dr.Know-How">@Dr.Know-How</a><br>
+      <span>UPDATED 2026.08.02</span>
+    </div>
+  </aside>
+
+  <!-- ══ 본문 ══ -->
+  <main>
+
+    <section class="block hero">
+      <p class="tag"><em>지금</em> 쓰고 있는 것</p>
+      <h1>기계가 이야기를 쓰는 시대,<br>문학은 <span class="q">무엇이 되는가</span><span class="caret" aria-hidden="true"></span></h1>
+      <p class="lede">AI와 문학, 한국 SF와 포스트휴머니즘, 생성형 AI 문학교육을 연구합니다. 소설을 읽는 일과 기계가 쓰는 일 사이에서, 비평이 할 수 있는 말을 찾고 있습니다.</p>
+      <p class="acts">
+        <a href="#">저서 보기 <span>→</span></a>
+        <a href="#">연구 보기 <span>→</span></a>
+        <a href="#">강연 요청 <span>→</span></a>
+      </p>
+      <ul class="keys">
+        <li>AI와 문학</li><li>한국 SF</li><li>포스트휴머니즘</li>
+        <li>인지 서사학</li><li>취약성 연구</li><li>생성형 AI 문학교육</li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <p class="tag">저서 <em>—</em> 단독 4권</p>
+      <div class="shelf">
+        <a class="spine s1" href="#">한국 포스트휴먼 SF</a>
+        <a class="spine s2" href="#">AI는 문학이다</a>
+        <a class="spine s3" href="#">소설 쓰는 로봇</a>
+        <a class="spine s4" href="#">몸의 인지 서사학</a>
+      </div>
+      <div class="shelf-notes">
+        <div class="n1">역사공간<br>2027 근간</div>
+        <div class="n2">역락<br>2026 근간</div>
+        <div class="n3">문학과지성사<br>2025</div>
+        <div class="n4">박이정<br>2023</div>
+      </div>
+    </section>
+
+    <section class="block">
+      <p class="tag">최근 <em>—</em> Selected</p>
+      <ul class="log">
+        <li>
+          <time datetime="2026-07-10">2026.07.10</time>
+          <p><span class="kind">리포트</span>「작가의 방에 AI가 들어왔다: AI 에이전트가 바꾸는 문학과 문학상」, 『KPIPA 리포트』 18호, 한국출판문화산업진흥원</p>
+        </li>
+        <li>
+          <time datetime="2026-07-08">2026.07.08</time>
+          <p><span class="kind">이슈페이퍼</span>「미래를 상상하는 힘, 디자인 픽션」, 고려대학교 미래교육연구원 『이슈페이퍼』 7호</p>
+        </li>
+        <li>
+          <time datetime="2026-05-30">2026.05.30</time>
+          <p><span class="kind">기조 발표</span>「트러블과 함께 읽기 — AI 에이전트와 문학 연구자의 대화에 관한 연구」, 제70회 국어국문학회 전국학술대회</p>
+        </li>
+        <li>
+          <time datetime="2026-03-10">2026.03.10 – 31</time>
+          <p><span class="kind">대중 강연</span>「인공지능과 함께 쓰는 문학」 (4회), 제주문학관</p>
+        </li>
+        <li>
+          <time datetime="2026-01-27">2026.01.27 – 28</time>
+          <p><span class="kind">초청 강연</span>The World of Korean Science Fiction Literature, University of Hawai‘i (Mānoa · West Oahu)</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <p class="tag">영역</p>
+      <div class="cols">
+        <div>
+          <p class="num">01</p>
+          <h3><a href="#">연구</a></h3>
+          <p>학술논문 40여 편. 한국 포스트휴먼 SF, 인지 서사학, 취약성 연구, 생성형 AI와 인문학. 한국연구재단·한국학중앙연구원 등 연구책임자 다수.</p>
+        </div>
+        <div>
+          <p class="num">02</p>
+          <h3><a href="#">평론</a></h3>
+          <p>2011년 &lt;문화일보&gt; 신춘문예 평론 부문 당선. 대산창작기금, 한국문화예술위원회 심층비평 사업 선정.</p>
+        </div>
+        <div>
+          <p class="num">03</p>
+          <h3><a href="#">강연·언론</a></h3>
+          <p>대학·도서관·문학관 강연, 방송 출연과 언론 기고. AI 시대의 문해력과 문학교육을 주제로 이야기합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <blockquote class="pull">
+        <p>[ 여기에 저서나 평론에서 직접 고른 문장 한 대목을 넣습니다. 두세 줄 분량이 적당합니다. ]</p>
+        <cite>출처 — 저서명, 출판사, 연도 (교체 예정)</cite>
+      </blockquote>
+    </section>
+
+    <footer class="page">
+      <span>제주대학교 사범대학 국어교육과</span>
+      <span>Fulbright Visiting Scholar, USC (2025–26)</span>
+      <span>© 2026 노대원</span>
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

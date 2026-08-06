@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">N — Dae-won Noh</title>
+  <desc id="desc">A dark navy square with an ivory serif N monogram and blue underline.</desc>
+  <rect width="64" height="64" rx="14" fill="#143631"/>
+  <text x="32" y="48" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="700" fill="#F4F0E8">N</text>
+  <rect x="15" y="53" width="34" height="3" rx="1.5" fill="#355DE8"/>
+</svg>
