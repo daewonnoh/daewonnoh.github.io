@@ -2143,3 +2143,28 @@ body:not(.home-page) .papers-feature figcaption {
 body:not(.home-page) .meta {
   font-size: 1.02rem;
 }
+
+/* Speaking topics section (home). Replaces the former research-areas block.
+   .area-grid rules are kept because en.html still uses them. */
+.speaking-topics .section-aside { display: flex; flex-direction: column; align-items: flex-end; gap: .15rem; margin-bottom: .8rem; text-align: right; }
+.speaking-topics .section-stat { margin: 0; color: #77736f; font-size: .68rem; font-weight: 700; letter-spacing: .04em; }
+.speaking-topics .section-aside .section-link { margin-bottom: 0; }
+.topic-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid rgba(17, 18, 22, .27); border-left: 1px solid rgba(17, 18, 22, .27); }
+.topic-grid a { display: flex; flex-direction: column; min-height: 13.5rem; padding: 1.15rem 1.25rem; border-right: 1px solid rgba(17, 18, 22, .27); border-bottom: 1px solid rgba(17, 18, 22, .27); color: var(--ink); text-decoration: none; }
+.topic-grid a:hover { background: #1648d4; color: #fff; }
+.topic-num { color: #77736f; font-size: .65rem; font-weight: 900; letter-spacing: .12em; }
+.topic-grid a:hover .topic-num { color: #b9cbff; }
+.topic-title { margin-top: auto; font-family: Georgia, "Noto Serif KR", serif; font-size: 1.45rem; font-weight: 500; letter-spacing: -.05em; line-height: 1.25; }
+.topic-desc { margin: .5rem 0 0; color: #55524e; font-size: .76rem; line-height: 1.65; }
+.topic-grid a:hover .topic-desc { color: #e2e8ff; }
+.topic-meta { display: flex; flex-direction: column; gap: .25rem; margin-top: .9rem; padding-top: .7rem; border-top: 1px solid rgba(17, 18, 22, .27); }
+.topic-grid a:hover .topic-meta { border-color: rgba(255, 255, 255, .32); }
+.topic-meta dt { color: #77736f; font-size: .6rem; font-weight: 900; letter-spacing: .14em; }
+.topic-grid a:hover .topic-meta dt { color: #9db4ff; }
+.topic-meta dd { margin: 0; color: #55524e; font-size: .7rem; line-height: 1.5; }
+.topic-grid a:hover .topic-meta dd { color: #dfe6ff; }
+@media (max-width: 640px) {
+  .speaking-topics .section-aside { align-items: flex-start; margin-bottom: .7rem; text-align: left; }
+  .topic-grid { grid-template-columns: 1fr; }
+  .topic-grid a { min-height: 0; }
+}
