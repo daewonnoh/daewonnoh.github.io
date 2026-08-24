@@ -2171,11 +2171,10 @@ body:not(.home-page) .meta {
 
 /* Top-nav hover submenus: show each page's section links on hover/focus */
 .site-nav li.has-submenu { position: relative; }
-.site-nav li.has-submenu > a::after {
+.site-nav .nav-caret {
   display: inline-block;
-  margin-left: .25em;
+  margin-left: .3em;
   font-size: .85em;
-  content: "▾";
   opacity: .6;
 }
 .site-nav .nav-dropdown {
