@@ -2246,8 +2246,8 @@ body:not(.home-page) .meta {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
   align-items: center;
   gap: clamp(1.5rem, 4vw, 3.5rem);
-  min-height: clamp(25rem, 39vw, 34rem);
-  padding: clamp(1.4rem, 2.8vw, 2.4rem) 0 clamp(2.5rem, 5vw, 4rem);
+  min-height: clamp(22rem, 36vw, 30rem);
+  padding: clamp(0.7rem, 1.5vw, 1.25rem) 0 clamp(2.5rem, 5vw, 4rem);
   overflow: visible;
   background: #f2eee8;
 }
@@ -2323,14 +2323,18 @@ a.hero-tile:focus-visible { outline: 2px solid #1648d4; outline-offset: 2px; }
     grid-template-columns: 1fr;
     gap: 2rem;
     min-height: 0;
-    padding: 1.4rem 0 3rem;
+    padding: 0.9rem 0 3rem;
   }
   .home-page .hero-copy { order: 0; max-width: none; }
   .hero-mosaic { order: 1; height: clamp(13rem, 62vw, 38rem); box-shadow: 10px 12px 0 rgba(22, 72, 212, .1); }
 }
 
 @media (max-width: 640px) {
-  .home-page .hero { padding: 1.1rem 0 2.5rem; }
+  /* 641px 미만에서는 .home-page .site-header 의 margin-bottom:0 규칙이
+     적용되지 않아 헤더 아래 여백이 24px 정도 더 붙는다. 함께 줄인다. */
+  .home-page .site-header { margin-bottom: .4rem; }
+  /* margin-top:0 규칙도 min-width:641px 에만 걸려 있어 여기서 다시 지정 */
+  .home-page .hero { margin-top: 0; padding: 0.7rem 0 2.5rem; }
   .home-page .hero-copy { order: 0; align-self: start; width: 100%; padding: 0; }
   .hero-mosaic {
     gap: .3rem;
