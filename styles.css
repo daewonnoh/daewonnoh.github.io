@@ -2402,3 +2402,20 @@ a.hero-tile:focus-visible { outline: 2px solid #1648d4; outline-offset: 2px; }
   padding: .5rem .6rem 1.9rem;
   background: linear-gradient(0deg, rgba(14, 15, 18, 0) 0%, rgba(14, 15, 18, .3) 42%, rgba(14, 15, 18, .78) 100%);
 }
+
+/* EBS 타일은 사진 위쪽에 프로그램 로고·상단 띠, 아래쪽에 방송 자막이
+   이미 들어차 있다. 전체 폭 캡션을 쓰면 어느 쪽에 두든 글자가 겹치므로,
+   비어 있는 우측 상단에 작은 배지로 얹는다. */
+.hero-tile-cap-top .hero-tile-caption {
+  top: .35rem;
+  right: .35rem;
+  bottom: auto;
+  left: auto;
+  width: max-content;
+  max-width: calc(100% - .7rem);
+  padding: .22rem .42rem;
+  border-radius: 2px;
+  background: rgba(12, 14, 18, .74);
+  font-size: .62rem;
+  letter-spacing: .01em;
+}
