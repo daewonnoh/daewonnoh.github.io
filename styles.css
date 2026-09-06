@@ -44,6 +44,12 @@ body {
 
 img, svg, video { max-width: 100%; height: auto; }
 
+/* <picture> 는 webp 협상용 껍데기일 뿐이므로 레이아웃 상자를 만들지
+   않는다. 이렇게 두어야 .book-cover img { height: 100% } 처럼 부모
+   높이를 기준으로 쓰는 기존 규칙이 그대로 동작한다.
+   (.hero-tile picture 는 자기 규칙으로 display: block 을 유지한다) */
+picture { display: contents; }
+
 .page-shell {
   width: min(100%, var(--content-width));
   margin: 0 auto;
@@ -340,7 +346,7 @@ li { margin: 0.4rem 0; }
   gap: var(--space-3);
   align-items: start;
 }
-`r`.academic-photo {
+.academic-photo {
   min-width: 0;
   margin: 0;
   padding: var(--space-2);
@@ -349,12 +355,12 @@ li { margin: 0.4rem 0; }
   border-radius: var(--radius);
   background: var(--surface);
 }
-`r`.academic-photo img {
+.academic-photo img {
   display: block;
   width: 100%;
   height: auto;
 }
-`r`.academic-photo figcaption {
+.academic-photo figcaption {
   margin-top: var(--space-2);
   color: var(--cv-muted);
   font-size: 0.85rem;
@@ -2455,4 +2461,65 @@ a.hero-tile:focus-visible { outline: 2px solid #1648d4; outline-offset: 2px; }
   body:not(.home-page) .record-date {
     margin-bottom: .1rem;
   }
+}
+
+/* ============================================================
+   2026-09 다크 책 카드의 주석 대비 보정
+   .book-card-text-dark 가 .book-card-year / .book-card-meta 만
+   밝은 색으로 덮고 .book-card-note 는 빠뜨려, 파랑 #1648d4 가
+   near-black #17181b 위에 그대로 남아 대비 2.46:1 이었다.
+   같은 계열 밝은 파랑(#a9bdf7)으로 맞추면 약 9.5:1 이 된다.
+   ============================================================ */
+.book-card-text-dark .book-card-note { color: #a9bdf7; }
+
+/* ============================================================
+   2026-09 좁은 화면 하위 메뉴 토글
+   드롭다운이 :hover 전용이라 터치 기기에서는 열 수 없었다.
+   assets/site-nav.js 가 상위 링크 옆에 버튼을 넣고, 640px 이하에서만
+   이 버튼을 노출한다. 641px 이상은 기존 hover 동작 그대로 두고
+   버튼을 숨겨 탭 순서에도 끼지 않게 한다.
+   ============================================================ */
+.nav-submenu-toggle { display: none; }
+
+@media (max-width: 640px) {
+  .site-nav .nav-caret { display: none; }
+
+  .nav-submenu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    min-height: 2rem;
+    margin-left: .1rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-size: .8rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .nav-submenu-toggle > span {
+    display: inline-block;
+    opacity: .6;
+    transition: transform .15s ease;
+  }
+
+  .site-nav li.has-submenu.is-open > .nav-submenu-toggle > span {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
+  .nav-submenu-toggle:focus-visible {
+    outline: 2px solid var(--accent-electric, #1648d4);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* 터치에는 hover 가 없다. 열림 여부는 .is-open 으로만 판단한다. */
+  .site-nav li.has-submenu:hover > .nav-dropdown,
+  .site-nav li.has-submenu:focus-within > .nav-dropdown { display: none; }
+
+  .site-nav li.has-submenu.is-open > .nav-dropdown { display: block; }
 }

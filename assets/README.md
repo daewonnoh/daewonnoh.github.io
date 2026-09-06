@@ -1,15 +1,37 @@
 # Public image assets
 
-Place the final public portrait at `portrait/portrait.<ext>` and book covers in `books/` using lowercase ASCII filenames such as `ai-is-literature.jpg`.
+공개 저장소에는 **실제로 페이지에서 참조하는 파일만** 둔다. 시안, 미사용
+크롭, AI 생성 인물 이미지는 넣지 않는다(한 번 커밋하면 삭제해도 히스토리에
+남는다). 저작자·출판사가 제공한 원본을 쓰고, 게시 전에 이용 권리를 확인하며,
+alt 텍스트는 해당 이미지의 용도에 맞게 페이지 마크업에 적는다.
 
-Use original files supplied by the author or publisher, confirm usage rights before publication, and keep alt text in the page markup specific to the image’s purpose.
+## 파일 규칙
 
+- 소문자 ASCII 파일명 (`novel-writing-robot.jpg`)
+- 사진은 `.jpg`(폴백) + `.webp`(우선) 쌍으로 두고 마크업에서
+  `<picture><source srcset="….webp" type="image/webp"><img src="….jpg" …></picture>`
+  로 참조한다. PNG 는 쓰지 않는다 — 사진에서는 5~10배 무겁다.
+- 모든 `<img>` 에 원본 픽셀 기준 `width` / `height` 를 적어 로딩 중
+  레이아웃이 밀리지 않게 한다.
 
-## Current local assets
+## 현재 자산
 
-- ooks/novel-writing-robot.jpg — cover image from the official YES24 product page for 『소설 쓰는 로봇』 (ISBN 9788932043982).
-- ooks/embodied-cognition-narratology.jpg — cover image from the official YES24 product page for 『몸의 인지 서사학』 (ISBN 9791158488567).
-- portrait/portrait-reference.jpg — crop from the user-provided reference image; replace with an original portrait file before public launch if available.
+### `hero/` — 홈 히어로 모자이크
+- `broadcast-ebs.*` — EBS 「당신의 문해력 플러스」 방송 스틸
+- `talk-kaist.*` — KAIST 인간의기원연구소 강연
+- `media-art.*` — LACMA, Los Angeles
 
-- portrait/portrait-network.jpg — wide hero crop from the user-provided reference image; preserves the research-keyword network and portrait framing.
-- portrait/hero-network-banner.jpg — full-bleed homepage hero background with a clear left text field.
+### `books/` — 표지
+출판사·서점 공식 상품 페이지 제공 이미지.
+`novel-writing-robot`(『소설 쓰는 로봇』, ISBN 9788932043982),
+`embodied-cognition-narratology`(『몸의 인지 서사학』, ISBN 9791158488567),
+그 밖에 공동 저서 표지 6종.
+
+### 본문 사진
+`kaist-human-origins-talk`(연구), `popular-narrative-sf-seminar`(연구),
+`broadcast-feature` · `public-feature` · `university-feature` · `media-feature`(강연·언론),
+`ebs-future-education`(경력).
+
+### 그 밖
+- `favicon.svg` — 파비콘
+- `og-lacma.jpg` — SNS 공유 카드 (1200×630 고정)
