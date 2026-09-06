@@ -2523,3 +2523,26 @@ a.hero-tile:focus-visible { outline: 2px solid #1648d4; outline-offset: 2px; }
 
   .site-nav li.has-submenu.is-open > .nav-dropdown { display: block; }
 }
+
+/* ============================================================
+   2026-09 문의 폼 보강
+   - .contact-honeypot: 스팸 봇만 채우도록 화면에서 완전히 뺀다.
+     display: none 은 일부 봇이 걸러내므로 위치로 밀어낸다.
+   - .contact-privacy: 개인정보 수집·이용 안내
+   ============================================================ */
+.contact-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-privacy {
+  margin-top: .7rem;
+  padding-top: .7rem;
+  border-top: 1px solid var(--rule-soft);
+  line-height: 1.6;
+}
+
+.contact-privacy strong { color: var(--cv-navy); }

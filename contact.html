@@ -12,6 +12,10 @@
   <title>문의하기 | 노대원</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="styles.css?v=20260906-korean-wrap">
+  <link rel="canonical" href="https://daewonnoh.github.io/contact.html">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <meta name="theme-color" content="#F7F3EF">
 </head>
 <body>
   <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
@@ -25,7 +29,7 @@
       <li class="has-submenu"><a href="speaking-media.html">강연·언론<span class="nav-caret" aria-hidden="true">▾</span></a><ul class="nav-dropdown"><li><a href="speaking-media.html#broadcast">방송 출연</a></li><li><a href="speaking-media.html#public">대중 강연</a></li><li><a href="speaking-media.html#university">대학 강연</a></li><li><a href="speaking-media.html#media">언론 기고·인터뷰</a></li></ul></li>
       <li class="has-submenu"><a href="about.html">경력<span class="nav-caret" aria-hidden="true">▾</span></a><ul class="nav-dropdown"><li><a href="about.html#career">학력·경력·수상</a></li><li><a href="about.html#teaching">교육 경력</a></li><li><a href="about.html#service">학술 · 사회 봉사</a></li></ul></li>
       <li><a href="cv.html">CV</a></li>
-      <li><a href="en.html">English</a></li>
+      <li><a href="contact.html" aria-current="page">문의</a></li><li><a href="en.html">English</a></li>
     </ul></nav>
   </header>
   <main id="main-content" class="contact-page">
@@ -35,6 +39,7 @@
         <h1 id="contact-title">문의<em> 또는 제안</em></h1>
         <p class="contact-lead">강연·자문·연구·협업에 관한 문의를 남겨 주세요. 입력하신 내용은 <a href="mailto:novum@skku.edu">novum@skku.edu</a>로 전달됩니다.</p>
         <p class="contact-note">작성 후 문의 보내기를 누르면 Google Apps Script를 통해 바로 전송됩니다.</p>
+        <p class="contact-note contact-privacy"><strong>개인정보 수집·이용 안내</strong> — 답변을 드리기 위해 이름과 이메일 주소, 문의 내용을 수집합니다. 수집한 내용은 문의 응대 목적으로만 쓰이며 <a href="mailto:novum@skku.edu">novum@skku.edu</a> 메일함에 보관됩니다. 별도의 데이터베이스에 저장하거나 제3자에게 제공하지 않고, 응대가 끝나고 1년이 지나면 지웁니다. 동의하지 않으셔도 위 주소로 직접 메일을 보내실 수 있습니다.</p>
         <p class="contact-back"><a class="text-link" href="index.html">← 홈페이지로 돌아가기</a></p>
       </div>
       <form class="contact-form" id="contact-form" method="POST" target="contact-submit-frame">
@@ -55,6 +60,11 @@
           <label for="contact-message">문의 내용</label>
           <textarea id="contact-message" name="message" rows="8" required></textarea>
         </div>
+        <!-- 스팸 봇 유인용. 사람에게는 보이지 않으므로 값이 차 있으면 전송하지 않는다. -->
+        <div class="contact-honeypot" aria-hidden="true">
+          <label for="contact-website">홈페이지 주소 (입력하지 마세요)</label>
+          <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
         <button class="cta cta-primary contact-submit" type="submit">문의 보내기 <span aria-hidden="true">↗</span></button>
         <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
         <iframe name="contact-submit-frame" id="contact-submit-frame" title="문의 전송 결과" hidden></iframe>
@@ -69,35 +79,80 @@
       const status = document.getElementById('contact-status');
       const submit = form.querySelector('button[type="submit"]');
       const resultFrame = document.getElementById('contact-submit-frame');
-      let submissionStarted = false;
+      const honeypot = document.getElementById('contact-website');
+      const loadedAt = Date.now();
+      let sending = false;
+      let frameFallback = false;
 
+      const say = (text, kind) => {
+        status.textContent = text;
+        status.className = 'contact-status' + (kind ? ' is-' + kind : '');
+      };
+
+      /* 폴백 경로에서만 쓴다. iframe 은 교차 출처라 응답을 읽을 수 없으므로,
+         "보냈다"가 아니라 "요청을 보냈다"까지만 말한다. */
       resultFrame.addEventListener('load', () => {
-        if (!submissionStarted) return;
-        status.textContent = '문의 전송 요청을 완료했습니다. 확인 후 답변드리겠습니다.';
-        status.className = 'contact-status is-success';
+        if (!frameFallback) return;
+        frameFallback = false;
+        sending = false;
         submit.disabled = false;
+        say('문의를 접수 서버로 보냈습니다. 다만 이 경로에서는 전송 성공 여부를 확인할 수 없습니다. '
+          + '하루 안에 회신이 없으면 novum@skku.edu 로 직접 메일을 보내 주세요.', 'success');
       });
 
-      form.addEventListener('submit', (event) => {
+      const submitViaFrame = () => {
+        frameFallback = true;
+        form.action = APPS_SCRIPT_ENDPOINT;
+        HTMLFormElement.prototype.submit.call(form);
+      };
+
+      form.addEventListener('submit', async (event) => {
         event.preventDefault();
+        if (sending) return;
+
         const data = Object.fromEntries(new FormData(form).entries());
+
         if (!data.name.trim() || !data.email.trim() || !data.subject.trim() || !data.message.trim()) {
-          status.textContent = '이름, 이메일, 메일 제목, 문의 내용을 모두 입력해 주세요.';
-          status.className = 'contact-status is-error';
-          return;
-        }
-        if (!APPS_SCRIPT_ENDPOINT || !APPS_SCRIPT_ENDPOINT.endsWith('/exec')) {
-          status.textContent = '관리자 설정이 아직 완료되지 않았습니다. Apps Script 웹앱 URL을 연결해 주세요.';
-          status.className = 'contact-status is-error';
+          say('이름, 이메일, 메일 제목, 문의 내용을 모두 입력해 주세요.', 'error');
           return;
         }
 
-        form.action = APPS_SCRIPT_ENDPOINT;
-        submissionStarted = true;
+        // 사람에게 보이지 않는 칸이 채워졌거나, 폼을 연 직후에 제출됐으면 봇으로 본다.
+        if (data.website || Date.now() - loadedAt < 3000) {
+          say('문의를 접수했습니다. 확인 후 답변드리겠습니다.', 'success');
+          form.reset();
+          return;
+        }
+        delete data.website;
+
+        sending = true;
         submit.disabled = true;
-        status.textContent = '문의 내용을 전송하는 중입니다…';
-        status.className = 'contact-status';
-        HTMLFormElement.prototype.submit.call(form);
+        say('문의 내용을 전송하는 중입니다…');
+
+        try {
+          /* x-www-form-urlencoded 는 CORS 단순 요청이라 preflight 없이 나가고,
+             Apps Script 웹앱이 돌려주는 { ok } 를 그대로 읽을 수 있다.
+             이렇게 해야 실패를 성공으로 표시하지 않는다. */
+          const res = await fetch(APPS_SCRIPT_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+            body: new URLSearchParams(data).toString(),
+          });
+          const payload = await res.json();
+
+          if (res.ok && payload && payload.ok) {
+            say('문의를 보냈습니다. 확인 후 답변드리겠습니다.', 'success');
+            form.reset();
+          } else {
+            say((payload && payload.error) || '문의 전송에 실패했습니다.'
+              + ' novum@skku.edu 로 직접 메일을 보내 주세요.', 'error');
+          }
+          sending = false;
+          submit.disabled = false;
+        } catch (error) {
+          // CORS·네트워크 문제로 응답을 못 읽는 브라우저에서는 예전 iframe 경로로 넘어간다.
+          submitViaFrame();
+        }
       });
     })();
   </script>
