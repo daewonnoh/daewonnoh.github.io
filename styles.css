@@ -820,11 +820,12 @@ body:not(.home-page) h2::after {
   content: "";}
 body:not(.home-page) h2 .section-note {
   flex: 0 0 auto;
-  margin-left: -.3rem;
+  margin-left: -.35rem;
   color: #686663;
-  font-size: .7rem;
+  font-family: "Noto Sans KR", Arial, sans-serif;
+  font-size: .58rem;
   font-weight: 400;
-  letter-spacing: 0;}
+  letter-spacing: .01em;}
 body:not(.home-page) section {
   margin: .85rem 0;
   padding-top: .75rem;
