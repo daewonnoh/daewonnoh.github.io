@@ -818,6 +818,13 @@ body:not(.home-page) h2::after {
   height: 1px;
   background: rgba(17,18,22,.2);
   content: "";}
+body:not(.home-page) h2 .section-note {
+  flex: 0 0 auto;
+  margin-left: -.3rem;
+  color: #686663;
+  font-size: .7rem;
+  font-weight: 400;
+  letter-spacing: 0;}
 body:not(.home-page) section {
   margin: .85rem 0;
   padding-top: .75rem;
