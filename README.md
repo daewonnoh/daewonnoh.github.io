@@ -19,6 +19,7 @@ en.html               English
 404.html              없는 주소
 styles.css            전체 스타일 (단일 파일)
 assets/site-nav.js    좁은 화면 하위 메뉴 토글
+assets/youtube-facade.js  홈 유튜브 썸네일 → 클릭 시 재생기
 assets/               이미지 — 규칙은 assets/README.md
 Dae-won-Noh-CV.pdf    공개용 CV
 ```
