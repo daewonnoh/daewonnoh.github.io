@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# 커밋되는 HTML 페이지의 "최종 업데이트" 날짜를 오늘(한국 시간)로 맞춘다.
+# 스테이징된 파일만 대상이며, 날짜가 없는 파일은 건드리지 않는다.
+# git 이 실행하는 셸 스크립트이므로 모델 토큰을 쓰지 않는다.
+set -euo pipefail
+
+export TODAY
+TODAY=$(TZ=Asia/Seoul date +%F)
+
+git diff --cached --name-only --diff-filter=AM -z -- '*.html' |
+while IFS= read -r -d '' file; do
+  perl -pi -e '
+    s/((?:최종 업데이트|Last updated): )\d{4}-\d{2}-\d{2}/$1$ENV{TODAY}/g;
+    s/(최종 업데이트: <time datetime=")\d{4}-\d{2}-\d{2}(">)\d{4}-\d{2}-\d{2}(<\/time>)/$1$ENV{TODAY}$2$ENV{TODAY}$3/g;
+  ' "$file"
+  git add -- "$file"
+done
